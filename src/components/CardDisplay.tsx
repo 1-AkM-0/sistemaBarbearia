@@ -1,5 +1,11 @@
 import Product from "@/lib/estoque";
-export default function CardDisplay({ product }: { product: Product }) {
+export default function CardDisplay({
+  product,
+  onDelete,
+}: {
+  product: Product;
+  onDelete: () => void;
+}) {
   return (
     <div
       key={product.id}
@@ -25,7 +31,10 @@ export default function CardDisplay({ product }: { product: Product }) {
         <button className="bg-blue-500 text-white px-3 py-1 rounded text-sm">
           Editar
         </button>
-        <button className="bg-red-500 text-white px-3 py-1 rounded text-sm">
+        <button
+          className="bg-red-500 text-white px-3 py-1 rounded text-sm"
+          onClick={onDelete}
+        >
           Apagar
         </button>
       </div>

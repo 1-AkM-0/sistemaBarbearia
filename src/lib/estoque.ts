@@ -8,7 +8,16 @@ export default interface Product {
   expiration?: string;
 }
 
-export let estoque: Product[] = [];
+export let estoque: Product[] = [
+  {
+    id: 1,
+    name: "",
+    quantity: 0,
+    price: 0,
+    lastUpdate: "",
+    isPerishable: false,
+  },
+];
 let idCounter: number = 1;
 
 export function addProduct(data: Omit<Product, "lastUpdate" | "id">) {
