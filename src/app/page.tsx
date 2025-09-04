@@ -1,13 +1,21 @@
 "use client";
-import Product, { deleteProduct, estoque } from "@/lib/estoque";
+import Product, { addProduct, deleteProduct, estoque } from "@/lib/estoque";
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
+import AddProductForm from "@/components/AddProductForm";
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [isAdding, setIsAdding] = useState<boolean>(false);
 
   useEffect(() => {
     setProducts(estoque);
   }, []);
+
+  const handleAddProduct = (newProductData: Product) => {
+    addProduct(newProductData);
+    setProducts([...estoque]);
+    setIsAdding(false);
+  };
 
   const handleDelete = (id: number) => {
     deleteProduct(id);
@@ -31,9 +39,18 @@ export default function Home() {
         )}
       </div>
 
-      <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+      <button
+        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        onClick={() => setIsAdding(true)}
+      >
         Adicionar
       </button>
+      {isAdding && (
+        <AddProductForm
+          onAdd={handleAddProduct}
+          onCancel={() => setIsAdding(false)}
+        />
+      )}
     </div>
   );
 }
