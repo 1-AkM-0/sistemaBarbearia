@@ -18,7 +18,7 @@ export let estoque: Product[] = [
     isPerishable: false,
   },
 ];
-let idCounter: number = 1;
+let idCounter: number = 2;
 
 export function addProduct(data: Omit<Product, "lastUpdate" | "id">) {
   const newProduct: Product = {

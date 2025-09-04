@@ -2,6 +2,7 @@ import Product from "@/lib/estoque";
 export default function CardDisplay({
   product,
   onDelete,
+  onEdit,
 }: {
   product: Product;
   onDelete: () => void;
@@ -28,7 +29,10 @@ export default function CardDisplay({
         {product.isPerishable ? product.expiration : "N/A"}
       </p>
       <div className="flex gap-2 mt-4">
-        <button className="bg-blue-500 text-white px-3 py-1 rounded text-sm">
+        <button
+          className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
+          onClick={onEdit}
+        >
           Editar
         </button>
         <button

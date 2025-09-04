@@ -1,11 +1,17 @@
 "use client";
-import Product, { addProduct, deleteProduct, estoque } from "@/lib/estoque";
+import Product, {
+  addProduct,
+  deleteProduct,
+  estoque,
+  updateProduct,
+} from "@/lib/estoque";
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
 import AddProductForm from "@/components/AddProductForm";
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
 
   useEffect(() => {
     setProducts(estoque);
@@ -15,6 +21,13 @@ export default function Home() {
     addProduct(newProductData);
     setProducts([...estoque]);
     setIsAdding(false);
+  };
+  const handleSaveEdit = (updatedProduct: Product) => {
+    updateProduct(updatedProduct.id, updatedProduct);
+    setProducts(
+      products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
+    );
+    setEditingId(null);
   };
 
   const handleDelete = (id: number) => {
@@ -32,6 +45,9 @@ export default function Home() {
               key={product.id}
               product={product}
               handleDelete={handleDelete}
+              isEditing={editingId === product.id}
+              onSave={handleSaveEdit}
+              setEditingId={setEditingId}
             />
           ))
         ) : (
